@@ -140,7 +140,7 @@ export function createManagerKeyboard(
           `buttons.${TRANSLATION_KEYS.buttons.connect}` as TranslationKey,
           { manager }
         ),
-        "https://t.me/GHub_International_Jakob"
+        "https://t.me/GHubInternational"
       );
     } else if (manager === "Vladislav") {
       keyboard.url(
