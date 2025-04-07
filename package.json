@@ -1,0 +1,23 @@
+{
+  "name": "g-hub-bot",
+  "version": "1.0.0",
+  "description": "Telegram bot for car services and sales",
+  "main": "dist/bot.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/bot.js",
+    "dev": "ts-node src/bot.ts",
+    "postinstall": "npm run build"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "grammy": "^1.21.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.19"
+  }
+}
