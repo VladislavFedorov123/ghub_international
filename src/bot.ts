@@ -10,6 +10,7 @@ import {
   handleBackToCarRequest,
   handleBackToServices,
   handleTextMessage,
+  handlePhoneNumber,
 } from "./handlers";
 import * as dotenv from "dotenv";
 import express, { Request, Response } from "express";
@@ -93,6 +94,7 @@ function initializeUserData(userId: number): UserDataWithTimestamp {
     lastActivity: now,
     lastMessageTimestamp: now,
     messageCount: 0,
+    phone_number: null,
   };
 
   userDataMap.set(userId, newData);
@@ -273,6 +275,34 @@ bot.on("message:text", async (ctx) => {
     await handleCarRequest(ctx, userData, ctx.message.text);
   } catch (error) {
     console.error("Error in message handler:", error);
+    if (error instanceof Error) {
+      console.error("Stack trace:", error.stack);
+    }
+    await ctx.reply("An error occurred. Please try again later.");
+  }
+});
+
+// Add contact message handler
+bot.on("message:contact", async (ctx) => {
+  const userId = ctx.from!.id;
+
+  if (isRateLimited(userId)) {
+    await ctx.reply("Please wait a moment before sending more messages.");
+    return;
+  }
+
+  try {
+    const userData = initializeUserData(userId);
+
+    if (!userData.language) {
+      return;
+    }
+
+    if (ctx.message.contact) {
+      await handlePhoneNumber(ctx, userData, ctx.message.contact.phone_number);
+    }
+  } catch (error) {
+    console.error("Error in contact handler:", error);
     if (error instanceof Error) {
       console.error("Stack trace:", error.stack);
     }

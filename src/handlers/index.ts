@@ -1,4 +1,5 @@
 import { Context } from "grammy";
+import { InlineKeyboard, Keyboard } from "grammy";
 import {
   UserData,
   LanguageOption,
@@ -14,7 +15,7 @@ import {
   PAYMENT_OPTIONS,
   SERVICE_OPTIONS,
 } from "../keyboards";
-import { getTranslation, Translation, TranslationKey } from "../translations";
+import { getTranslation, Translation, TranslationKey, TRANSLATION_KEYS } from "../translations";
 
 export async function handleStart(ctx: Context, userData: UserData) {
   userData.car_request = "";
@@ -212,13 +213,17 @@ async function sendDataToAdmin(ctx: Context, userData: UserData) {
     (opt: LanguageOption) => opt.id === userData.language
   );
 
-  // Get user contact info
-  const username = ctx.from?.username ? `@${ctx.from.username}` : null;
-  const phoneNumber = (ctx.from as any)?.phone_number ? `📱 ${(ctx.from as any).phone_number}` : null;
-  const userContact = username || phoneNumber || "No contact info";
+  // Get user info
+  const username = ctx.from?.username ? `@${ctx.from.username}` : "No username";
+  const firstName = ctx.from?.first_name || "";
+  const lastName = ctx.from?.last_name || "";
+  const fullName = [firstName, lastName].filter(Boolean).join(" ") || "No name";
 
   const message = `🚗 New Order Details:
-👤 User: ${userContact}
+👤 User Info:
+   • Username: ${username}
+   • Name: ${fullName}
+   • Phone: +${userData.phone_number || "Not provided"}
 🌐 Language: ${languageOption?.label || "Not specified"}
 🚘 Car request: ${userData.car_request}
 🛠 Services: ${selectedServices}
@@ -275,9 +280,48 @@ export async function handlePaymentSelection(
         userData.language!,
         `buttons.payment.${paymentId}` as TranslationKey
       ),
+      phone: userData.phone_number || getTranslation(userData.language!, "notProvided"),
     })
   );
   userData.messagesToDelete.push(summaryMessage.message_id);
+
+  // Ask for phone number with share button
+  const keyboard = new Keyboard();
+  keyboard.requestContact(
+    getTranslation(
+      userData.language!,
+      `buttons.${TRANSLATION_KEYS.buttons.sharePhone}` as TranslationKey
+    )
+  );
+
+  const phoneMessage = await ctx.reply(
+    getTranslation(userData.language!, "phoneNumberRequest"),
+    { reply_markup: keyboard }
+  );
+  userData.messagesToDelete.push(phoneMessage.message_id);
+  userData.keyboard_active = false;
+}
+
+export async function handlePhoneNumber(
+  ctx: Context,
+  userData: UserData,
+  phoneNumber: string
+) {
+  userData.phone_number = phoneNumber;
+  userData.keyboard_active = true;
+
+  // Delete the phone request message if it exists
+  if (userData.last_selector_message_id) {
+    try {
+      await ctx.api.deleteMessage(
+        ctx.chat!.id,
+        userData.last_selector_message_id
+      );
+      userData.last_selector_message_id = null;
+    } catch (error) {
+      console.warn("Failed to delete phone request message:", error);
+    }
+  }
 
   // Send data to admin
   await sendDataToAdmin(ctx, userData);
@@ -298,11 +342,12 @@ export async function handlePaymentSelection(
 
   // Send final message about asking questions to manager
   const finalMessage = await ctx.reply(
-    getTranslation(userData.language!, "askManagerMessage")
+    getTranslation(userData.language!, "askManagerMessage"),
+    {
+      reply_markup: { remove_keyboard: true }
+    }
   );
   userData.messagesToDelete.push(finalMessage.message_id);
-
-  // Mark workflow as completed
   userData.workflow_completed = true;
 }
 

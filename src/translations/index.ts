@@ -16,10 +16,13 @@ export const TRANSLATION_KEYS = {
   noServicesSelected: "noServicesSelected",
   pleaseUseKeyboard: "pleaseUseKeyboard",
   askManagerMessage: "askManagerMessage",
+  phoneNumberRequest: "phoneNumberRequest",
+  notProvided: "notProvided",
   buttons: {
     confirm: "confirm",
     connect: "connect",
     back: "back",
+    sharePhone: "sharePhone",
     services: {
       video_call: "video_call",
       tuning: "tuning",
@@ -59,10 +62,13 @@ export interface Translation {
   [TRANSLATION_KEYS.noServicesSelected]: string;
   [TRANSLATION_KEYS.pleaseUseKeyboard]: string;
   [TRANSLATION_KEYS.askManagerMessage]: string;
+  [TRANSLATION_KEYS.phoneNumberRequest]: string;
+  [TRANSLATION_KEYS.notProvided]: string;
   buttons: {
     [TRANSLATION_KEYS.buttons.confirm]: string;
     [TRANSLATION_KEYS.buttons.connect]: string;
     [TRANSLATION_KEYS.buttons.back]: string;
+    [TRANSLATION_KEYS.buttons.sharePhone]: string;
     services: {
       [TRANSLATION_KEYS.buttons.services.video_call]: string;
       [TRANSLATION_KEYS.buttons.services.tuning]: string;
@@ -170,10 +176,13 @@ export const translations: Record<string, Translation> = {
     [TRANSLATION_KEYS.pleaseUseKeyboard]: `⚠️ Please use the menu buttons to make your selection.`,
     [TRANSLATION_KEYS.askManagerMessage]:
       "You can ask all further questions to our manager. They will be happy to help you!",
+    [TRANSLATION_KEYS.phoneNumberRequest]: `📱 Please share your phone number so we can contact you:`,
+    [TRANSLATION_KEYS.notProvided]: "Not provided yet",
     buttons: {
       [TRANSLATION_KEYS.buttons.confirm]: "Confirm Selection",
       [TRANSLATION_KEYS.buttons.connect]: "Connect with {manager}",
       [TRANSLATION_KEYS.buttons.back]: "Back",
+      [TRANSLATION_KEYS.buttons.sharePhone]: "Share My Phone",
       services: {
         [TRANSLATION_KEYS.buttons.services.video_call]: "Video Call",
         [TRANSLATION_KEYS.buttons.services.tuning]: "Tuning",
@@ -204,10 +213,13 @@ export const translations: Record<string, Translation> = {
     [TRANSLATION_KEYS.pleaseUseKeyboard]: `⚠️ Bitte verwenden Sie die Tastaturtasten für Ihre Auswahl.`,
     [TRANSLATION_KEYS.askManagerMessage]:
       "Alle weiteren Fragen können Sie unserem Manager stellen. Er wird Ihnen gerne helfen!",
+    [TRANSLATION_KEYS.phoneNumberRequest]: `📱 Bitte teilen Sie Ihre Telefonnummer mit uns, damit wir Sie kontaktieren können:`,
+    [TRANSLATION_KEYS.notProvided]: "Noch nicht angegeben",
     buttons: {
       [TRANSLATION_KEYS.buttons.confirm]: "Auswahl bestätigen",
       [TRANSLATION_KEYS.buttons.connect]: "Mit {manager} verbinden",
       [TRANSLATION_KEYS.buttons.back]: "Zurück",
+      [TRANSLATION_KEYS.buttons.sharePhone]: "Telefonnummer teilen",
       services: {
         [TRANSLATION_KEYS.buttons.services.video_call]: "Videogespräch",
         [TRANSLATION_KEYS.buttons.services.tuning]: "Tuning",
@@ -238,10 +250,13 @@ export const translations: Record<string, Translation> = {
     [TRANSLATION_KEYS.pleaseUseKeyboard]: `⚠️ Por favor, use los botones del teclado para hacer su selección.`,
     [TRANSLATION_KEYS.askManagerMessage]:
       "Puede hacer todas las preguntas adicionales a nuestro gerente. ¡Estará encantado de ayudarle!",
+    [TRANSLATION_KEYS.phoneNumberRequest]: `📱 Por favor, comparta su número de teléfono para que podamos contactarlo:`,
+    [TRANSLATION_KEYS.notProvided]: "Aún no proporcionado",
     buttons: {
       [TRANSLATION_KEYS.buttons.confirm]: "Confirmar selección",
       [TRANSLATION_KEYS.buttons.connect]: "Conectar con {manager}",
       [TRANSLATION_KEYS.buttons.back]: "Atrás",
+      [TRANSLATION_KEYS.buttons.sharePhone]: "Compartir mi teléfono",
       services: {
         [TRANSLATION_KEYS.buttons.services.video_call]: "Videollamada",
         [TRANSLATION_KEYS.buttons.services.tuning]: "Tuning",
@@ -272,10 +287,13 @@ export const translations: Record<string, Translation> = {
     [TRANSLATION_KEYS.pleaseUseKeyboard]: `⚠️ Пожалуйста, используйте кнопки меню для выбора.`,
     [TRANSLATION_KEYS.askManagerMessage]:
       "Все дальнейшие вопросы вы можете задать нашему менеджеру. Он будет рад вам помочь!",
+    [TRANSLATION_KEYS.phoneNumberRequest]: `📱 Пожалуйста, поделитесь своим номером телефона, чтобы мы могли с вами связаться:`,
+    [TRANSLATION_KEYS.notProvided]: "Еще не указан",
     buttons: {
       [TRANSLATION_KEYS.buttons.confirm]: "Подтвердить выбор",
       [TRANSLATION_KEYS.buttons.connect]: "Связаться с {manager}",
       [TRANSLATION_KEYS.buttons.back]: "Назад",
+      [TRANSLATION_KEYS.buttons.sharePhone]: "Поделиться номером",
       services: {
         [TRANSLATION_KEYS.buttons.services.video_call]: "Видеозвонок",
         [TRANSLATION_KEYS.buttons.services.tuning]: "Тюнинг",
@@ -297,7 +315,7 @@ export const translations: Record<string, Translation> = {
     [TRANSLATION_KEYS.serviceSelection]: `Чудовий вибір! Дякуємо!`,
     [TRANSLATION_KEYS.serviceSelectionTitle]: `👉 Виберіть цікаві для вас послуги:`,
     [TRANSLATION_KEYS.paymentSelection]: `💳 Який спосіб оплати ви віддаєте перевагу?`,
-    [TRANSLATION_KEYS.summary]: `Ваш вибір:\n\nАвтомобіль: {vehicle}\nПослуги: {services}\nСпособ оплати: {payment}`,
+    [TRANSLATION_KEYS.summary]: `Ваш вибір:\n\nАвтомобіль: {vehicle}\nПослуги: {services}\nСпосіб оплати: {payment}`,
     [TRANSLATION_KEYS.managerInfo]: `Ваш представник з продажів: {manager}`,
     [TRANSLATION_KEYS.selectService]: `Будь ласка, виберіть хоча б одну послугу.`,
     [TRANSLATION_KEYS.choices]: `✅ Ваш вибір зафіксовано:\n\nПослуги: {services}\nСпособ оплати: {payment}\n\nМи зв'яжемося з вами найближчим часом!`,
@@ -306,10 +324,13 @@ export const translations: Record<string, Translation> = {
     [TRANSLATION_KEYS.pleaseUseKeyboard]: `⚠️ Будь ласка, використовуйте кнопки меню для вибору.`,
     [TRANSLATION_KEYS.askManagerMessage]:
       "Всі подальші питання ви можете задати нашому менеджеру. Він буде радий вам допомогти!",
+    [TRANSLATION_KEYS.phoneNumberRequest]: `📱 Будь ласка, поділіться своїм номером телефону, щоб ми могли з вами зв'язатися:`,
+    [TRANSLATION_KEYS.notProvided]: "Ще не вказано",
     buttons: {
       [TRANSLATION_KEYS.buttons.confirm]: "Підтвердити вибір",
       [TRANSLATION_KEYS.buttons.connect]: "Зв'язатися з {manager}",
       [TRANSLATION_KEYS.buttons.back]: "Назад",
+      [TRANSLATION_KEYS.buttons.sharePhone]: "Поділитися номером",
       services: {
         [TRANSLATION_KEYS.buttons.services.video_call]: "Відеодзвінок",
         [TRANSLATION_KEYS.buttons.services.tuning]: "Тюнінг",

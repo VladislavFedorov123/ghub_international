@@ -8,6 +8,7 @@ export interface UserData {
   messagesToDelete: number[];
   keyboard_active: boolean;
   workflow_completed: boolean;
+  phone_number: string | null;
 }
 
 export interface ServiceOption {
