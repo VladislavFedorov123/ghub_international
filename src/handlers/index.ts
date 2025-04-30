@@ -214,7 +214,7 @@ async function sendDataToAdmin(ctx: Context, userData: UserData) {
 
   // Get user contact info
   const username = ctx.from?.username ? `@${ctx.from.username}` : null;
-  const phoneNumber = ctx.from?.phone_number ? `📱 ${ctx.from.phone_number}` : null;
+  const phoneNumber = (ctx.from as any)?.phone_number ? `📱 ${(ctx.from as any).phone_number}` : null;
   const userContact = username || phoneNumber || "No contact info";
 
   const message = `🚗 New Order Details:
