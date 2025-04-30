@@ -212,8 +212,13 @@ async function sendDataToAdmin(ctx: Context, userData: UserData) {
     (opt: LanguageOption) => opt.id === userData.language
   );
 
+  // Get user contact info
+  const username = ctx.from?.username ? `@${ctx.from.username}` : null;
+  const phoneNumber = ctx.from?.phone_number ? `📱 ${ctx.from.phone_number}` : null;
+  const userContact = username || phoneNumber || "No contact info";
+
   const message = `🚗 New Order Details:
-👤 User: @${ctx.from?.username || "No username"}
+👤 User: ${userContact}
 🌐 Language: ${languageOption?.label || "Not specified"}
 🚘 Car request: ${userData.car_request}
 🛠 Services: ${selectedServices}
